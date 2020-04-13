@@ -1,0 +1,27 @@
+﻿@page "/"
+@using Microsoft.Data.SqlClient;
+@using Syncfusion.Blazor.Grids;
+@using Syncfusion.Blazor.Data;
+@using Syncfusion.Blazor;
+@using System.Data
+
+<SfGrid @ref="Grid" TValue="Order" AllowPaging="true">
+    <SfDataManager Adaptor="Adaptors.CustomAdaptor">
+        <CustomAdaptorComponent></CustomAdaptorComponent>
+    </SfDataManager>
+    <GridColumns>
+        <GridColumn Field=@nameof(Order.OrderID) HeaderText="Order ID" IsIdentity="true" IsPrimaryKey="true" TextAlign="TextAlign.Right" Width="120">
+        </GridColumn>
+        <GridColumn Field=@nameof(Order.CustomerID) HeaderText="Customer Name" Width="150"></GridColumn>
+    </GridColumns>
+</SfGrid>
+@code{
+    SfGrid<Order> Grid { get; set; }
+    public static List<Order> Orders { get; set; }
+
+    public class Order
+    {
+        public int? OrderID { get; set; }
+        public string CustomerID { get; set; }
+    }
+}

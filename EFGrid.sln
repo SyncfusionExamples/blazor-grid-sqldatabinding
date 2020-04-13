@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29521.150
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFGrid", "EFGrid\EFGrid.csproj", "{8649D52C-EA33-4FE3-895E-6EC327E46FD7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8649D52C-EA33-4FE3-895E-6EC327E46FD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8649D52C-EA33-4FE3-895E-6EC327E46FD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8649D52C-EA33-4FE3-895E-6EC327E46FD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8649D52C-EA33-4FE3-895E-6EC327E46FD7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1BB05EF7-0485-45EA-B443-23899F13794E}
+	EndGlobalSection
+EndGlobal
