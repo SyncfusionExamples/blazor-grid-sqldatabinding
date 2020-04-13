@@ -6,7 +6,7 @@ Before the implementation, we need to add required NuGet like **Microsoft.Data.S
 
 In custom adaptor `Read` method you can get grid action details like paging, filtering, sorting information etc., using `DataManagerRequest`.
 Based on the `DataManagerRequest`, you can form SQL query string (to perform paging) and execute the SQL query and retrieve the data from database using SqlDataAdapter. 
-The Fill method of the DataAdapter is used to populate a DataSet with the results of the SelectCommand of the DataAdapter, then converted the DataSet into List and return Result and Count pair object in Rread function method to bind the data to Grid.
+The Fill method of the DataAdapter is used to populate a DataSet with the results of the SelectCommand of the DataAdapter, then converted the DataSet into List and return Result and Count pair object in `Read` method to bind the data to Grid.
 
 ```xml
 <SfGrid TValue="Order" AllowPaging="true">
