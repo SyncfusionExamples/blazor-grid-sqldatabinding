@@ -1,6 +1,6 @@
 # Blazor DataGrid SQL Server Databinding using SqlClient data provider
 
-This examples demonstrates, how to consume data from SQL Server using Microsoft SqlClient and bound it to Blazor DataGrid. You can achieve this requirement by using Custom Adaptor. 
+This examples demonstrates, how to consume data from SQL Server using Microsoft SqlClient and bound it to Blazor DataGrid. You can achieve this requirement by using [Custom Adaptor](https://blazor.syncfusion.com/documentation/datagrid/custom-binding/). 
 
 Before the implementation, we need to add required NuGet like **Microsoft.Data.SqlClient** and Syncfusion.Blazor in your application. In the below sample, Custom Adaptor can be created as a Component.
 
