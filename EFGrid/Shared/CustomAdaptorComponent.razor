@@ -25,7 +25,6 @@
         using (SqlConnection connection = new SqlConnection(
                    connectionString))
         {
-
             SqlDataAdapter adapter = new SqlDataAdapter(queryString, connection);
             DataSet dt = new DataSet();
             try
@@ -44,25 +43,104 @@
             return dt;
         }
     }
+
     // Performs data Read operation
-    public override object Read(DataManagerRequest dm, string key = null)
+    public override object Read(DataManagerRequest DataManagerReq, string Key = null)
     {
-        string appdata = _env.ContentRootPath;
-        string path = Path.Combine(appdata, "App_Data\\NORTHWND.MDF");
-        string str = $"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename='{path}';Integrated Security=True;Connect Timeout=30";
-        // based on the skip and take count from DataManagerRequest here we formed SQL query string
-        string qs = "SELECT OrderID, CustomerID FROM dbo.Orders ORDER BY OrderID OFFSET " + dm.Skip + " ROWS FETCH NEXT " + dm.Take + " ROWS ONLY;";
-        DataSet data = CreateCommand(qs, str);
-        Orders = data.Tables[0].AsEnumerable().Select(r => new Order
+        string AppData = _env.ContentRootPath;
+        string DatabasePath = Path.Combine(AppData, "App_Data\\NORTHWND.MDF");
+        string ConnectionStr = $"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename='{DatabasePath}';Integrated Security=True;Connect Timeout=30";
+        string QueryStr = "SELECT OrderID, CustomerID FROM dbo.Orders ORDER BY OrderID OFFSET " + DataManagerReq.Skip + " ROWS FETCH NEXT " + DataManagerReq.Take + " ROWS ONLY;";
+        DataSet Data = CreateCommand(QueryStr, ConnectionStr);
+        Orders = Data.Tables[0].AsEnumerable().Select(r => new Order
         {
             OrderID = r.Field<int>("OrderID"),
             CustomerID = r.Field<string>("CustomerID")
-        }).ToList();  // here we convert dataset into list
+        }).ToList();  // Here, we convert dataset into list
         IEnumerable<Order> DataSource = Orders;
-        SqlConnection conn = new SqlConnection(str);
-        conn.Open();
-        SqlCommand comm = new SqlCommand("SELECT COUNT(*) FROM dbo.Orders", conn);
-        Int32 count = (Int32)comm.ExecuteScalar();
-        return dm.RequiresCounts ? new DataResult() { Result = DataSource, Count = count } : (object)DataSource;
+        SqlConnection Con = new SqlConnection(ConnectionStr);
+        Con.Open();
+        SqlCommand Cmd = new SqlCommand("SELECT COUNT(*) FROM dbo.Orders", Con);
+        Int32 Count = (Int32)Cmd.ExecuteScalar();
+        return DataManagerReq.RequiresCounts ? new DataResult() { Result = DataSource, Count = Count } : (object)DataSource;
     }
+
+    // Performs Insert operation
+    public override object Insert(DataManager DataManager, object Value, string Key)
+    {
+        //Here, you can implement your own code to update the record from the grid.
+        string AppData = _env.ContentRootPath;
+        string DatabasePath = Path.Combine(AppData, "App_Data\\NORTHWND.MDF");
+        string ConnectionStr = $"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename='{DatabasePath}';Integrated Security=True;Connect Timeout=30";
+        string QueryStr = $"Insert into Orders(CustomerID) values('{(Value as Order).CustomerID}')";
+        SqlConnection Con = new SqlConnection(ConnectionStr);
+        try
+        {
+            Con.Open();
+            SqlCommand Cmd = new SqlCommand(QueryStr, Con);
+            Cmd.ExecuteNonQuery();
+        }
+        catch (SqlException Exception)
+        {
+            Console.WriteLine(Exception.ToString());
+        }
+        finally
+        {
+            Con.Close();
+        }
+        return Value;
+    }
+
+    // Performs Update operation
+    public override object Update(DataManager DataManager, object Value, string KeyField, string Key)
+    {
+        //Here, you can implement your own code to update the record from the grid.
+        string AppData = _env.ContentRootPath;
+        string DatabasePath = Path.Combine(AppData, "App_Data\\NORTHWND.MDF");
+        string ConnectionStr = $"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename='{DatabasePath}';Integrated Security=True;Connect Timeout=30";
+        string QueryStr = $"Update Orders set CustomerID='{(Value as Order).CustomerID}' where OrderID={(Value as Order).OrderID}";
+        SqlConnection Con = new SqlConnection(ConnectionStr);
+        try
+        {
+            Con.Open();
+            SqlCommand Cmd = new SqlCommand(QueryStr, Con);
+            Cmd.ExecuteNonQuery();
+        }
+        catch (SqlException Exception)
+        {
+            Console.WriteLine(Exception.ToString());
+        }
+        finally
+        {
+            Con.Close();
+        }
+        return Value;
+    }
+
+    // Performs Remove operation
+    public override object Remove(DataManager DataManager, object Value, string KeyField, string Key)
+    {
+        //Here, you can implement your own code to delete the record from the grid.
+        string AppData = _env.ContentRootPath;
+        string DatabasePath = Path.Combine(AppData, "App_Data\\NORTHWND.MDF");
+        string Connectionstr = $"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename='{DatabasePath}';Integrated Security=True;Connect Timeout=30";
+        string QueryStr = $"Delete from Orders where OrderID={Value}";
+        SqlConnection Con = new SqlConnection(Connectionstr);
+        try
+        {
+            Con.Open();
+            SqlCommand Cmd = new SqlCommand(QueryStr, Con);
+            Cmd.ExecuteNonQuery();
+        }
+        catch (SqlException Exception)
+        {
+            Console.WriteLine(Exception.ToString());
+        }
+        finally
+        {
+            Con.Close();
+        }
+        return Value;
+    }
+
 }
