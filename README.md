@@ -1,12 +1,6 @@
 # Blazor DataGrid SQL Server Databinding using SqlClient data provider
 
-This examples demonstrates, how to consume data from SQL Server using Microsoft SqlClient and bound it to Blazor DataGrid. You can achieve this requirement by using [Custom Adaptor](https://blazor.syncfusion.com/documentation/datagrid/custom-binding/). 
-
-Before the implementation, we need to add required NuGet like **Microsoft.Data.SqlClient** and Syncfusion.Blazor in your application. In the below sample, Custom Adaptor can be created as a Component.
-
-In custom adaptor `Read` method you can get grid action details like paging, filtering, sorting information etc., using `DataManagerRequest`.
-Based on the `DataManagerRequest`, you can form SQL query string (to perform paging) and execute the SQL query and retrieve the data from database using SqlDataAdapter. 
-The Fill method of the DataAdapter is used to populate a DataSet with the results of the SelectCommand of the DataAdapter, then converted the DataSet into List and return Result and Count pair object in `Read` method to bind the data to Grid.
+This sample demonstrates how to bind the Syncfusion Blazor DataGrid to Microsoft SQL Server data using the `Microsoft.Data.SqlClient` provider and a [Custom Adaptor](https://blazor.syncfusion.com/documentation/datagrid/custom-binding/). The implementation retrieves records from the `NORTHWND.MDF` database and performs server-side processing through the Grid's `DataManagerRequest` object. The sample overrides the `Read` method of the custom adaptor to generate and execute SQL queries, retrieve data through `SqlDataAdapter`, convert the results into strongly typed objects, and return a `DataResult` that can be consumed directly by the Syncfusion Blazor DataGrid.
 
 ```xml
 <SfGrid TValue="Order" AllowPaging="true">
@@ -102,3 +96,81 @@ ROWS FETCH NEXT " + dm.Take + " ROWS ONLY;";
 * In this sample, we handled Paging action for Blazor grid based on your need you can extend the given logic for other operations.
 * For performing data manipulation, you can override other methods such as `Insert`, `Update` and `Remove` of Custom Adaptor.
 
+## Key Features
+
+- Uses the Syncfusion Blazor `DataAdaptor` class to implement custom data binding.
+- Overrides the `Read(DataManagerRequest dm, string key = null)` method to process Grid requests.
+- Uses the `DataManagerRequest` object to obtain paging information such as `Skip` and `Take`.
+- Generates SQL Server paging queries using `OFFSET` and `FETCH NEXT`.
+- Uses `Microsoft.Data.SqlClient` APIs including:
+  - `SqlConnection`
+  - `SqlDataAdapter`
+  - `SqlCommand`
+- Retrieves data into a `DataSet` through `SqlDataAdapter.Fill`.
+- Converts database records into a strongly typed `Order` model.
+- Returns a `DataResult` object containing both `Result` and `Count` values required by the Grid.
+- Uses the `NORTHWND.MDF` database attached through LocalDB.
+- Demonstrates server-side paging logic that can be extended for filtering, sorting, CRUD operations, and other DataGrid actions.
+
+## Prerequisites
+
+- Visual Studio 2022 or Visual Studio Code
+- .NET SDK compatible with the project's target framework
+- Microsoft SQL Server LocalDB
+- Microsoft.Data.SqlClient package
+- Syncfusion.Blazor package
+
+## How to Run the Project
+
+**Visual Studio 2022**
+
+1. Clone or download this repository.
+2. Open the solution file from either:
+   - `NET5/`
+   - `NET6/EFGrid/`
+3. Restore all NuGet packages.
+4. Ensure the `NORTHWND.MDF` database is available in the application's `App_Data` folder.
+5. Build the solution.
+6. Set the corresponding application project as the startup project if required.
+7. Run the application using `Ctrl+F5`.
+
+**Visual Studio Code**
+
+1. Open the repository folder in Visual Studio Code.
+2. Open the integrated terminal.
+3. Navigate to the desired sample project directory.
+
+```bash
+cd NET6/EFGrid
+dotnet restore
+dotnet run
+```
+
+Or:
+
+```bash
+cd NET5
+dotnet restore
+dotnet run
+```
+
+4. Open the application URL displayed in the console after the application starts.
+
+## Project Structure
+
+- `NET6/EFGrid/Pages/Index.razor` — contains the `SfGrid` implementation, `Order` model, and Grid configuration.
+- `NET6/EFGrid/` — contains the .NET 6 sample demonstrating SQL Server binding through a custom adaptor.
+- `NET5/` — contains the .NET 5 implementation of the SQL databinding sample.
+- `App_Data/NORTHWND.MDF` — SQL Server database used as the sample data source.
+- Custom `DataAdaptor` implementation — overrides `Read(DataManagerRequest dm, string key = null)` to execute SQL queries and return Grid data.
+- `Microsoft.Data.SqlClient` integration — uses `SqlConnection`, `SqlDataAdapter`, and `SqlCommand` to retrieve records and record counts from SQL Server.
+
+## Support and Feedback
+
+- For general product questions, visit the [Syncfusion Community Forum](https://www.syncfusion.com/forums) or [Syncfusion Support](https://www.syncfusion.com/support).
+- To report an issue specific to this sample, open a GitHub issue in this repository.
+- For official documentation related to this feature, see https://blazor.syncfusion.com/documentation/datagrid/custom-binding
+
+## License
+
+This is a Syncfusion sample project provided to demonstrate product usage. Review the [Syncfusion license terms](https://www.syncfusion.com/sales/pricing?category=ui-components) before using Syncfusion components in your own applications.
