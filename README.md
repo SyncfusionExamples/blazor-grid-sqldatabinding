@@ -1,6 +1,6 @@
 # Blazor DataGrid SQL Server Databinding using SqlClient data provider
 
-This sample demonstrates how to bind the Syncfusion Blazor DataGrid to Microsoft SQL Server data using the `Microsoft.Data.SqlClient` provider and a [Custom Adaptor](https://blazor.syncfusion.com/documentation/datagrid/custom-binding/). The implementation retrieves records from the `NORTHWND.MDF` database and performs server-side processing through the Grid's `DataManagerRequest` object. The sample overrides the `Read` method of the custom adaptor to generate and execute SQL queries, retrieve data through `SqlDataAdapter`, convert the results into strongly typed objects, and return a `DataResult` that can be consumed directly by the Syncfusion Blazor DataGrid.
+This sample demonstrates how to bind the Syncfusion [Blazor DataGrid](https://www.syncfusion.com/blazor-components/blazor-datagrid) to Microsoft SQL Server data using the `Microsoft.Data.SqlClient` provider and a Custom Adaptor. The implementation retrieves records from the `NORTHWND.MDF` database and performs server-side processing through the Grid's `DataManagerRequest` object. The sample overrides the `Read` method of the custom adaptor to generate and execute SQL queries, retrieve data through `SqlDataAdapter`, convert the results into strongly typed objects, and return a `DataResult` that can be consumed directly by the Syncfusion Blazor DataGrid.
 
 ```xml
 <SfGrid TValue="Order" AllowPaging="true">
@@ -169,7 +169,7 @@ dotnet run
 
 - For general product questions, visit the [Syncfusion Community Forum](https://www.syncfusion.com/forums) or [Syncfusion Support](https://www.syncfusion.com/support).
 - To report an issue specific to this sample, open a GitHub issue in this repository.
-- For official documentation related to this feature, see https://blazor.syncfusion.com/documentation/datagrid/custom-binding
+- For official documentation related to this feature, see https://help.syncfusion.com/grid-sdk/blazor/data-grid/connecting-to-adaptors/custom-adaptor
 
 ## License
 
